@@ -1,0 +1,26 @@
+{
+  "ids": {
+    "UserEntity": 3,
+    "GameEntity": 2,
+    "RoundEntity": 9
+  },
+  "models": {
+    "UserEntity": {
+      "w": "{\"userNickname\":\"w\",\"userCreationTime\":\"2019-10-07T00:13:13.125Z\"}",
+      "dd": "{\"userNickname\":\"dd\",\"userCreationTime\":\"2019-10-07T00:13:13.125Z\"}"
+    },
+    "GameEntity": {
+      "1": "{\"userOneNickname\":\"w\",\"userTwoNickname\":\"dd\",\"gameCreationTime\":\"2019-10-07T00:13:14.003Z\",\"id\":1}"
+    },
+    "RoundEntity": {
+      "1": "{\"gameId\":1,\"movementUserOne\":\"ROCK\",\"movementUserTwo\":\"PAPER\",\"winner\":2,\"movementCreationTime\":\"2019-10-07T00:13:14.006Z\",\"id\":1}",
+      "2": "{\"gameId\":1,\"movementUserOne\":\"PAPER\",\"movementUserTwo\":\"PAPER\",\"winner\":0,\"movementCreationTime\":\"2019-10-07T00:17:39.829Z\",\"id\":2}",
+      "3": "{\"gameId\":1,\"movementUserOne\":\"ROCK\",\"movementUserTwo\":\"PAPER\",\"winner\":2,\"movementCreationTime\":\"2019-10-07T00:17:39.829Z\",\"id\":3}",
+      "4": "{\"gameId\":1,\"movementUserOne\":\"PAPER\",\"movementUserTwo\":\"PAPER\",\"winner\":0,\"movementCreationTime\":\"2019-10-07T00:17:39.829Z\",\"id\":4}",
+      "5": "{\"gameId\":1,\"movementUserOne\":\"PAPER\",\"movementUserTwo\":\"PAPER\",\"winner\":0,\"movementCreationTime\":\"2019-10-07T00:18:29.852Z\",\"id\":5}",
+      "6": "{\"gameId\":1,\"movementUserOne\":\"PAPER\",\"movementUserTwo\":\"PAPER\",\"winner\":-1,\"movementCreationTime\":\"2019-10-07T00:19:21.762Z\",\"id\":6}",
+      "7": "{\"gameId\":1,\"movementUserOne\":\"SCISSORS\",\"movementUserTwo\":\"PAPER\",\"winner\":1,\"movementCreationTime\":\"2019-10-07T00:19:21.762Z\",\"id\":7}",
+      "8": "{\"gameId\":1,\"movementUserOne\":\"SCISSORS\",\"movementUserTwo\":\"PAPER\",\"winner\":1,\"movementCreationTime\":\"2019-10-07T00:19:21.762Z\",\"id\":8}"
+    }
+  }
+}
