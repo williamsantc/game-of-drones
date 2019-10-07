@@ -9,11 +9,6 @@ export class RoundRepositoryAdapter implements RoundRepositoryPort {
   async findMovementsByGameId(gameId: number): Promise<RoundModel[]> {
     return this.roundMapper.entityToDomainList(
       await this.roundLbRepo.find({
-        include: [
-          {
-            relation: RoundLoopbackRepository.GAME_RELATION_NAME,
-          },
-        ],
         where: {
           gameId: gameId,
         },

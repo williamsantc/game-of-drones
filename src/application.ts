@@ -24,6 +24,7 @@ import { ROUND_REPOSITORY, RoundRepositoryProvider } from './providers/infrastru
 import { ROUND_MAPPER, RoundMapperProvider } from './providers/infrastructure/round.mapper.provider';
 import { ROUND_APP_MAPPER, RoundAppMapperProvider } from './providers/application/round.app.mapper.provider';
 import { ROUND_APP_SERVICE, RoundAppServiceProvider } from './providers/application/round.app.service.provider';
+import { WINNER_APP_MAPPER, WinnerAppMapperProvider } from './providers/application/winner.app.mapper.provider';
 
 export class GameOfDronesApplication extends BootMixin(ServiceMixin(RepositoryMixin(RestApplication))) {
   constructor(options: ApplicationConfig = {}) {
@@ -52,6 +53,7 @@ export class GameOfDronesApplication extends BootMixin(ServiceMixin(RepositoryMi
     this.bind(PLAYERS_SAVED_APP_MAPPER).toProvider(PlayersSavedAppMapperProvider);
     this.bind(ROUND_APP_MAPPER).toProvider(RoundAppMapperProvider);
     this.bind(ROUND_APP_SERVICE).toProvider(RoundAppServiceProvider);
+    this.bind(WINNER_APP_MAPPER).toProvider(WinnerAppMapperProvider);
 
     // this.bind(RestBindings.SequenceActions.REJECT).toProvider(ErrorHandlerProvider);
 

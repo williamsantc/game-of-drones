@@ -1,15 +1,18 @@
 import { AvailableMovementsEnum } from '../../app/domain/model/available-movements.enum';
 import { RoundModel } from '../../app/domain/model/round.model';
+import { RoundWinnerEnum } from '../../app/domain/model/round-winner.enum';
 
 export class RoundBuilder {
   private gameId: number;
   private movementUserOne: AvailableMovementsEnum;
   private movementUserTwo: AvailableMovementsEnum;
+  private winner: number;
 
   constructor() {
     this.gameId = 1;
     this.movementUserOne = AvailableMovementsEnum.ROCK;
     this.movementUserTwo = AvailableMovementsEnum.PAPER;
+    this.winner = RoundWinnerEnum.USER_TWO;
   }
 
   public withGameId(id: number) {
@@ -27,7 +30,14 @@ export class RoundBuilder {
     return this;
   }
 
+  public withWinner(winner: number) {
+    this.winner = winner;
+    return this;
+  }
+
   public build() {
-    return new RoundModel(this.gameId, this.movementUserOne, this.movementUserTwo);
+    const roundModel = new RoundModel(this.gameId, this.movementUserOne, this.movementUserTwo);
+    roundModel.setWinner(this.winner);
+    return roundModel;
   }
 }

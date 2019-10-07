@@ -10,6 +10,10 @@ import { RoundRepositoryPort } from '../../../../app/domain/port/round.repositor
 import { RoundRepositoryAdapter } from '../../../../app/infrastructure/repository/round.repository.adapter';
 import { RoundBuilder } from '../../../builder/round.builder';
 import { AvailableMovementsEnum } from '../../../../app/domain/model/available-movements.enum';
+import { RoundMock } from '../../../mock/round.mock';
+import { RoundWinnerEnum } from '../../../../app/domain/model/round-winner.enum';
+import { RoundModel } from '../../../../app/domain/model/round.model';
+import { GameFinishedError } from '../../../../app/domain/error/game-finished.error';
 
 describe('GameService', () => {
   const userOneNickname = 'userOne';
@@ -86,6 +90,8 @@ describe('GameService', () => {
       const round = new RoundBuilder().build();
       gameRepositoryStub.checkIfExistById.returns(new Promise(resolve => resolve(false)));
 
+      roundRepositoryStub.findMovementsByGameId.returns(new Promise(resolve => resolve(RoundMock.getListMock())));
+
       // Act - Assert
       await expect(testedClass.playRound(round)).rejectedWith(new DataNotFoundError(GameService.GAME_NOT_FOUND));
     });
@@ -95,13 +101,16 @@ describe('GameService', () => {
         .withMovementUserOne(AvailableMovementsEnum.PAPER)
         .withMovementUserTwo(AvailableMovementsEnum.ROCK)
         .build();
-      const expectedWinner = 1;
 
       gameRepositoryStub.checkIfExistById.returns(new Promise(resolve => resolve(true)));
 
+      roundRepositoryStub.findMovementsByGameId.returns(new Promise(resolve => resolve(RoundMock.getListMock())));
+
       const winner = await testedClass.playRound(round);
 
-      expect(winner).to.eql(expectedWinner);
+      if (winner) {
+        expect(winner.getWinner()).to.eql(RoundWinnerEnum.USER_ONE);
+      }
     });
 
     it('should win user two: PAPER vs SCISSORS', async function() {
@@ -109,13 +118,16 @@ describe('GameService', () => {
         .withMovementUserOne(AvailableMovementsEnum.PAPER)
         .withMovementUserTwo(AvailableMovementsEnum.SCISSORS)
         .build();
-      const expectedWinner = 2;
 
       gameRepositoryStub.checkIfExistById.returns(new Promise(resolve => resolve(true)));
 
+      roundRepositoryStub.findMovementsByGameId.returns(new Promise(resolve => resolve(RoundMock.getListMock())));
+
       const winner = await testedClass.playRound(round);
 
-      expect(winner).to.eql(expectedWinner);
+      if (winner) {
+        expect(winner.getWinner()).to.eql(RoundWinnerEnum.USER_TWO);
+      }
     });
 
     it('should win user two: SCISSORS vs ROCK', async function() {
@@ -123,13 +135,16 @@ describe('GameService', () => {
         .withMovementUserOne(AvailableMovementsEnum.SCISSORS)
         .withMovementUserTwo(AvailableMovementsEnum.ROCK)
         .build();
-      const expectedWinner = 2;
 
       gameRepositoryStub.checkIfExistById.returns(new Promise(resolve => resolve(true)));
 
+      roundRepositoryStub.findMovementsByGameId.returns(new Promise(resolve => resolve(RoundMock.getListMock())));
+
       const winner = await testedClass.playRound(round);
 
-      expect(winner).to.eql(expectedWinner);
+      if (winner) {
+        expect(winner.getWinner()).to.eql(RoundWinnerEnum.USER_TWO);
+      }
     });
 
     it('should win user one: SCISSORS vs PAPER', async function() {
@@ -137,13 +152,16 @@ describe('GameService', () => {
         .withMovementUserOne(AvailableMovementsEnum.SCISSORS)
         .withMovementUserTwo(AvailableMovementsEnum.PAPER)
         .build();
-      const expectedWinner = 1;
 
       gameRepositoryStub.checkIfExistById.returns(new Promise(resolve => resolve(true)));
 
+      roundRepositoryStub.findMovementsByGameId.returns(new Promise(resolve => resolve(RoundMock.getListMock())));
+
       const winner = await testedClass.playRound(round);
 
-      expect(winner).to.eql(expectedWinner);
+      if (winner) {
+        expect(winner.getWinner()).to.eql(RoundWinnerEnum.USER_ONE);
+      }
     });
 
     it('should win user two: ROCK vs PAPER', async function() {
@@ -151,13 +169,16 @@ describe('GameService', () => {
         .withMovementUserOne(AvailableMovementsEnum.ROCK)
         .withMovementUserTwo(AvailableMovementsEnum.PAPER)
         .build();
-      const expectedWinner = 2;
 
       gameRepositoryStub.checkIfExistById.returns(new Promise(resolve => resolve(true)));
 
+      roundRepositoryStub.findMovementsByGameId.returns(new Promise(resolve => resolve(RoundMock.getListMock())));
+
       const winner = await testedClass.playRound(round);
 
-      expect(winner).to.eql(expectedWinner);
+      if (winner) {
+        expect(winner.getWinner()).to.eql(RoundWinnerEnum.USER_TWO);
+      }
     });
 
     it('should win user one: ROCK vs SCISSORS', async function() {
@@ -165,13 +186,16 @@ describe('GameService', () => {
         .withMovementUserOne(AvailableMovementsEnum.ROCK)
         .withMovementUserTwo(AvailableMovementsEnum.SCISSORS)
         .build();
-      const expectedWinner = 1;
 
       gameRepositoryStub.checkIfExistById.returns(new Promise(resolve => resolve(true)));
 
+      roundRepositoryStub.findMovementsByGameId.returns(new Promise(resolve => resolve(RoundMock.getListMock())));
+
       const winner = await testedClass.playRound(round);
 
-      expect(winner).to.eql(expectedWinner);
+      if (winner) {
+        expect(winner.getWinner()).to.eql(RoundWinnerEnum.USER_ONE);
+      }
     });
 
     it('should be a tie game: ROCK vs ROCK', async function() {
@@ -179,13 +203,59 @@ describe('GameService', () => {
         .withMovementUserOne(AvailableMovementsEnum.ROCK)
         .withMovementUserTwo(AvailableMovementsEnum.ROCK)
         .build();
-      const expectedWinner = -1;
 
       gameRepositoryStub.checkIfExistById.returns(new Promise(resolve => resolve(true)));
 
+      roundRepositoryStub.findMovementsByGameId.returns(new Promise(resolve => resolve(RoundMock.getListMock())));
+
       const winner = await testedClass.playRound(round);
 
-      expect(winner).to.eql(expectedWinner);
+      if (winner) {
+        expect(winner.getWinner()).to.eql(RoundWinnerEnum.TIE);
+      }
+    });
+
+    it('should return continue playing false', async function() {
+      const continuePlaying = false;
+      const round = new RoundBuilder()
+        .withMovementUserOne(AvailableMovementsEnum.ROCK)
+        .withMovementUserTwo(AvailableMovementsEnum.SCISSORS)
+        .build();
+
+      gameRepositoryStub.checkIfExistById.returns(new Promise(resolve => resolve(true)));
+
+      const roundList: RoundModel[] = [];
+
+      roundList.push(new RoundBuilder().withWinner(RoundWinnerEnum.USER_ONE).build());
+      roundList.push(new RoundBuilder().withWinner(RoundWinnerEnum.USER_ONE).build());
+      roundList.push(new RoundBuilder().withWinner(RoundWinnerEnum.USER_TWO).build());
+
+      roundRepositoryStub.findMovementsByGameId.returns(new Promise(resolve => resolve(roundList)));
+
+      const winner = await testedClass.playRound(round);
+
+      if (winner) {
+        expect(winner.getContinuePlaying()).to.eql(continuePlaying);
+      }
+    });
+
+    it('should throw GameFinishedError due to limit wins reached', async function() {
+      const round = new RoundBuilder()
+        .withMovementUserOne(AvailableMovementsEnum.ROCK)
+        .withMovementUserTwo(AvailableMovementsEnum.SCISSORS)
+        .build();
+
+      gameRepositoryStub.checkIfExistById.returns(new Promise(resolve => resolve(true)));
+
+      const roundList: RoundModel[] = [];
+
+      roundList.push(new RoundBuilder().withWinner(RoundWinnerEnum.USER_ONE).build());
+      roundList.push(new RoundBuilder().withWinner(RoundWinnerEnum.USER_ONE).build());
+      roundList.push(new RoundBuilder().withWinner(RoundWinnerEnum.USER_ONE).build());
+
+      roundRepositoryStub.findMovementsByGameId.returns(new Promise(resolve => resolve(roundList)));
+
+      await expect(testedClass.playRound(round)).rejectedWith(new GameFinishedError(GameService.GAME_FINISHED));
     });
   });
 });

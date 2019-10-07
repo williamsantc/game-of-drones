@@ -7,4 +7,10 @@ export class WinnerType {
     required: true,
   })
   winner: number;
+
+  @property({
+    type: 'boolean',
+    required: true,
+  })
+  continuePlaying: boolean;
 }
