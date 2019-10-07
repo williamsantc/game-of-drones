@@ -1,5 +1,5 @@
-import {AvailableMovementsEnum} from "../../app/domain/model/available-movements.enum";
-import {RoundModel} from "../../app/domain/model/round.model";
+import { AvailableMovementsEnum } from '../../app/domain/model/available-movements.enum';
+import { RoundModel } from '../../app/domain/model/round.model';
 
 export class RoundBuilder {
   private gameId: number;
