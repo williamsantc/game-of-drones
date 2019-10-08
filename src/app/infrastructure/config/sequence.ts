@@ -15,6 +15,7 @@ import { RequiredValueError } from '../../domain/error/required-value.error';
 import { InvalidMovementError } from '../../domain/error/invalid-movement.error';
 import { UnexpectedGameError } from '../../domain/error/unexpected-game.error';
 import { GameFinishedError } from '../../domain/error/game-finished.error';
+import {EqualsNicknameError} from "../../domain/error/equals-nickname.error";
 
 const SequenceActions = RestBindings.SequenceActions;
 
@@ -32,6 +33,7 @@ export class MySequence implements SequenceHandler {
     this.ERROR_CATALOG.set(RequiredValueError.name, HttpStatus.BAD_REQUEST);
     this.ERROR_CATALOG.set(InvalidMovementError.name, HttpStatus.BAD_REQUEST);
     this.ERROR_CATALOG.set(GameFinishedError.name, HttpStatus.BAD_REQUEST);
+    this.ERROR_CATALOG.set(EqualsNicknameError.name, HttpStatus.BAD_REQUEST);
     this.ERROR_CATALOG.set(UnexpectedGameError.name, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 

@@ -14,6 +14,7 @@ import { RoundMock } from '../../../mock/round.mock';
 import { RoundWinnerEnum } from '../../../../app/domain/model/round-winner.enum';
 import { RoundModel } from '../../../../app/domain/model/round.model';
 import { GameFinishedError } from '../../../../app/domain/error/game-finished.error';
+import {EqualsNicknameError} from "../../../../app/domain/error/equals-nickname.error";
 
 describe('GameService', () => {
   const userOneNickname = 'userOne';
@@ -69,6 +70,18 @@ describe('GameService', () => {
     // Act - Assert
     await expect(testedClass.createGame(userOneNickname, userTwoNickname)).rejectedWith(
       new DataNotFoundError(GameService.USER_TWO_NOT_FOUND),
+    );
+  });
+
+  it('should thrown EqualsNicknameError when users are equals', async function() {
+    // Arrange
+    userRepositoryStub.checkIfExistByNickName.returns(new Promise(resolve => resolve(true)));
+
+    gameRepositoryStub.createGame.returns(new Promise(resolve => resolve(gameId)));
+
+    // Act - Assert
+    await expect(testedClass.createGame(userOneNickname, userOneNickname)).rejectedWith(
+        new EqualsNicknameError(GameService.EQUALS_NICKNAMES),
     );
   });
 

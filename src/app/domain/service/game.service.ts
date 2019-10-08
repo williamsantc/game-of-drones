@@ -8,15 +8,18 @@ import { UnexpectedGameError } from '../error/unexpected-game.error';
 import { RoundWinnerEnum } from '../model/round-winner.enum';
 import { WinnerModel } from '../model/winner.model';
 import { GameFinishedError } from '../error/game-finished.error';
+import {EqualsNicknameError} from "../error/equals-nickname.error";
 
 export class GameService {
   public static readonly USER_ONE_NOT_FOUND = 'the user nickname one is not found';
   public static readonly USER_TWO_NOT_FOUND = 'the user nickname two is not found';
   public static readonly GAME_NOT_FOUND = 'the requested game is not found';
-  public static readonly NO_ROUND_WINNER_FOUND = (movementOne: string, movementTwo: string) =>
-    `The movements ${movementOne} and ${movementTwo} doesn't have a winning strategy`;
+  public static readonly EQUALS_NICKNAMES = 'The nicknames provided are equals';
   public static readonly GAME_FINISHED = 'The game have already finished';
   public static readonly MAX_ROUND_WINS = 3;
+
+  public static readonly NO_ROUND_WINNER_FOUND = (movementOne: string, movementTwo: string) =>
+    `The movements ${movementOne} and ${movementTwo} doesn't have a winning strategy`;
 
   constructor(
     private gameRepositoryPort: GameRepositoryPort,
@@ -31,6 +34,10 @@ export class GameService {
 
     if (!(await this.userRepositoryPort.checkIfExistByNickName(userNicknameTwo))) {
       throw new DataNotFoundError(GameService.USER_TWO_NOT_FOUND);
+    }
+
+    if(userNicknameOne === userNicknameTwo) {
+      throw new EqualsNicknameError(GameService.EQUALS_NICKNAMES);
     }
     return this.gameRepositoryPort.createGame(userNicknameOne, userNicknameTwo);
   }
