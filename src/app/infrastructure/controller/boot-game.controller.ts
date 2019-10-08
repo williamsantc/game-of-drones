@@ -13,7 +13,7 @@ import { GameStartedType } from '../../application/type/game-started.type';
 export class BootGameController {
   constructor(@inject(BOOT_GAME_APP_SERVICE) private bootGameAppService: BootGameAppService) {}
 
-  @post('/save-players', {
+  @post('/api/save-players', {
     responses: {
       [HttpStatus.OK]: {
         description: 'Save the players and start a game',

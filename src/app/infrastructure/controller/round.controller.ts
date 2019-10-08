@@ -10,7 +10,7 @@ import { WinnerType } from '../../application/type/winner.type';
 export class RoundController {
   constructor(@inject(ROUND_APP_SERVICE) private roundAppService: RoundAppService) {}
 
-  @post('/play-round', {
+  @post('/api/play-round', {
     responses: {
       [HttpStatus.OK]: {
         description: 'play a round and returns the winner',

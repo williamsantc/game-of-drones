@@ -7,7 +7,7 @@ export class UserModel {
   private userCreationTime: Date;
 
   constructor(userNickname: string) {
-    if (!userNickname) {
+    if (!userNickname || !userNickname.trim()) {
       throw new RequiredValueError(UserModel.NICKNAME_REQUIRED);
     }
     this.userNickname = userNickname;
